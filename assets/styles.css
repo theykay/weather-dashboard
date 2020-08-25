@@ -1,0 +1,12 @@
+h1 {
+    text-align: center;
+}
+
+#searches {
+    display: flex;
+    align-content: flex-end;
+}
+
+.input-field {
+    margin: 0 0 0 2rem;
+}

@@ -4,12 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Weather Dashboard</title>
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="./assets/styles.css">
-    <link rel="stylesheet" href="./assets/fontawesome.css">
+    <link rel="stylesheet" href="./assets/fontawesome/css/all.css">
 </head>
 
 <body>
+    <header>
+        <!-- change header background image to reflect current weather -->
+        <h1>weather dashboard</h1>
+    </header>
+    <div class="container">
+        <div class="row">
+            <!-- container for searches -->
+            <div id="searches" class="col s4">
+                <div class="input-field">
+                    <input type="text" id="autocomplete-input" class="autocomplete">
+                    <label for="autocomplete-input"><i class="fas fa-map-marker-alt"></i> enter city</label>
+                </div>
+            </div>
+            <!-- put weather results here -->
+            <div id="showWeather" class="col s8">
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Materialize JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js'></script>
