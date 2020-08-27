@@ -4,9 +4,11 @@ h1 {
 
 #searches {
     display: flex;
-    align-content: flex-end;
 }
 
-.input-field {
-    margin: 0 0 0 2rem;
+#cityInput {
+    box-sizing: border-box;
+    margin: 0 0 0 0.5rem;
+    display: flex;
+    flex-grow: 1;
 }
