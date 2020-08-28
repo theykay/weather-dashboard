@@ -49,10 +49,8 @@ $(document).ready(function () {
 
     var appID = 'd818490e3db0c249345d4f13e2070e69';
     var coordinateURL = "https://api.openweathermap.org/data/2.5/weather?";
-    // 5-day forecast API
-    var weatherURL = "https://api.openweathermap.org/data/2.5/forecast?";
     // one-call API
-    var weatherURL2 = 'https://api.openweathermap.org/data/2.5/onecall?exclude=minutely,hourly';
+    var weatherURL = 'https://api.openweathermap.org/data/2.5/onecall?exclude=minutely,hourly';
 
     initialize();
 
@@ -129,16 +127,23 @@ $(document).ready(function () {
     
     function showWeather(data) {
         console.log(data.name + '\n' + data.lat + '\n' + data.lon);
-        let displayURL = weatherURL2 + "&lat=" + data.lat + "&lon=" + data.lon + "&appid=" + appID;
+        let displayURL = weatherURL + "&lat=" + data.lat + "&lon=" + data.lon + "&appid=" + appID;
         console.log(displayURL);
+
         $.ajax({
-            URL: displayURL,
-            method: 'GET',
-        }).then(function(response){
+            type: 'GET',
+            url: displayURL,
+            dataType: 'json'
+         }).then(function(response){
             console.log(response);
-            // let currentWeather = $('<div>');
-            // let cityName = $('<h2>');
-            // cityName.text(data.city);
+        // $.ajax({
+        //     URL: displayURL,
+        //     method: 'GET',
+        // }).then(function(response){
+        //     console.log(response);
+        //     let currentWeather = $('<div>');
+        //     let cityName = $('<h2>');
+        //     cityName.text(data.city);
         });
     }
 });
