@@ -157,14 +157,32 @@ $(document).ready(function () {
             let today = moment.unix(response.current.dt).format('dddd, D MMMM');
             let todayDisplay = $('<h3>');
             todayDisplay.text(today);
+
+            // temperature
+
+            // humidity
+
+            // wind speed
+
+            // uv index
             
             $('#display').append(currentWeather);
 
             
             // go through five days of forecast
             const forecast = $('<div>');
+            forecast.html('<h3>5-Day forecast:</h3>');
             for (let f = 0; f < 5; f++) {
+                // day
                 const dayX = $('<div>');
+
+                // icon for conditions
+
+                // hi temp
+
+                // lo temp
+
+                // humidity
 
             };
             $('#display').append(forecast);
