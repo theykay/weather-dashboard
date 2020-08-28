@@ -16,13 +16,15 @@ $(document).ready(function () {
     // UV index
     // 3      show color that indicates favorable, moderate, severe
     // 4 future weather conditions
-    // ecah day on 5-day forecast shows:
+    // each day on 5-day forecast shows:
     // date
     // icon representation of weather conditions
     // temperature (max and min)
     // humidity
     // 5 click on city in search history, show all same stuff
     // 6 opening page shows last searched city info
+
+
 
     // assign  classes in quotes to call icon
     const icons = {
@@ -40,61 +42,84 @@ $(document).ready(function () {
         wind: "fas fa-wind"
     };
 
+    // array to hold searched cities
+    let history = [];
+
+    let pageLoad = true;
+
     var appID = 'd818490e3db0c249345d4f13e2070e69';
     var coordinateURL = "https://api.openweathermap.org/data/2.5/weather?";
     var weatherURL = "https://api.openweathermap.org/data/2.5/onecall/timemachine?";
     // lat={lat}&lon={lon}&dt={time}&appid={YOUR API KEY}
 
-    // when you click search...
-    // $('#cityModal').on('show.bs.modal', function () {
-    //     // get the value in the search bar
-    //     const searchString = $('#cityInput').val();
-    //     let queryURL = coordinateURL + 'q=' + searchString + '&appid=' + appID;
-    //     $.ajax({
-    //         url: queryURL,
-    //         method: "GET"
-    //     }).then(function(response) {
-    //         console.log(response);
-    //     }).catch(function(error) {
-    //       // if something fails; error handling
-    //       console.log(error);
-    //     });
+    initialize();
 
     $('#searchBtn').on('click', function () {
+        pageLoad = false;
         const searchString = $('#cityInput').val();
         let queryURL = coordinateURL + 'q=' + searchString + '&appid=' + appID;
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-            console.log(response);
             let cityLat = response.coord.lat;
             let cityLon = response.coord.lon;
-            console.log("lat: " + cityLat + "\nlon: " + cityLon);
-            let coordURL = weatherURL + "lat=" + cityLat + "&lon=" + cityLon + "appid=" + appID;
-            $.ajax({
-                url: coordURL,
-                method: 'GET'
-            }).then(showWeather(response));
-        }).catch(function (error) {
+            storeCity(searchString, cityLat, cityLon);
+            buttonify();
+            let coordURL = weatherURL + "lat=" + cityLat + "&lon=" + cityLon + "&appid=" + appID;
+            // $.ajax({
+            //     url: coordURL,
+            //     method: 'GET'
+            // }).then(showWeather(response));
+        }).catch(function () {
             // if something fails; error handling
             $('#errorModal').modal('show');
         });
 
     })
 
-    // loop through local storage no more than 10 times
-    // call this function each time to make a button for the most recent searches
-    function buttonify(city) {
-        let newBtn = $('<button>');
-        newBtn.addClass('againWeather');
-        newBtn.text(city);
-        newBtn.attr('data-city', city);
-        $('#buttons').append(newBtn);
+    // initialize();
+    function initialize() {
+        history = JSON.parse(localStorage.getItem('history'));
+        pageLoad = true;
+        buttonify();
+        showWeather(history[0]);
+    }
+
+    // add city name and coordinates to local storage
+    function storeCity(city, lat, lon) {
+        let info = { 'city': city, 'lat': lat, 'lon': lon };
+        history.splice(0, 0, info);
+        if (history.length > 8) {
+            for (let j = 8; j < history.length; j++) {
+                history.splice(j, 1);
+            };
+        };
+        localStorage.setItem('history', JSON.stringify(history));
+    }
+    
+    function buttonify() {
+        $('#buttons').empty();
+        let b;
+        // this makes it so the first city 
+        if (pageLoad) {
+            b = 0;
+        } else {
+            b = 1;
+        }
+        for (b < history.length; b++) {
+            let newBtn = $('<button>');
+            newBtn.addClass('againWeather btn ');
+            newBtn.text(history[b].city);
+            newBtn.attr('data-lat', history[b].lat);
+            newBtn.attr('data-lon', history[b].lon);
+            $('#buttons').append(newBtn);
+        }
+
     }
 
     function showWeather(data) {
-        const 
+        data.
     }
 
 });
