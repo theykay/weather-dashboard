@@ -131,14 +131,14 @@ $(document).ready(function () {
         console.log(data.name + '\n' + data.lat + '\n' + data.lon);
         let displayURL = weatherURL2 + "&lat=" + data.lat + "&lon=" + data.lon + "&appid=" + appID;
         console.log(displayURL);
-        // $.ajax({
-        //     URL: displayURL,
-        //     method: 'GET' 
-        // }).then(function(response){
-        //     console.log(response);
-        //     let currentWeather = $('<div>');
-        //     let cityName = $('<h2>');
-        //     cityName.text(data.city);
-        // });
+        $.ajax({
+            URL: displayURL,
+            method: 'GET',
+        }).then(function(response){
+            console.log(response);
+            // let currentWeather = $('<div>');
+            // let cityName = $('<h2>');
+            // cityName.text(data.city);
+        });
     }
 });
