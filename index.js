@@ -56,15 +56,17 @@ $(document).ready(function () {
 
     $('#searchBtn').on('click', function () {
         pageLoad = false;
-        const searchString = $('#cityInput').val();
+        let searchString = $('#cityInput').val();
         let queryURL = coordinateURL + 'q=' + searchString + '&appid=' + appID;
+        console.log(queryURL);
         $.ajax({
             url: queryURL,
             method: "GET"
         }).then(function (response) {
+            let cityName = response.name;
             let cityLat = response.coord.lat;
             let cityLon = response.coord.lon;
-            storeCity(searchString, cityLat, cityLon);
+            storeCity(cityName, cityLat, cityLon);
             buttonify();
             let displayURL = weatherURL + "lat=" + cityLat + "&lon=" + cityLon + "&appid=" + appID;
             // $.ajax({
@@ -83,37 +85,46 @@ $(document).ready(function () {
         history = JSON.parse(localStorage.getItem('history'));
         pageLoad = true;
         buttonify();
-        showWeather(history[0]);
+        if (history != null && history.length > 0) {
+            showWeather(history[0]);
+        }
+
     }
 
     // add city name and coordinates to local storage
     function storeCity(city, lat, lon) {
-        let info = {'city': city, 'lat': lat, 'lon': lon };
-        history.splice(0, 0, info);
-        if (history.length > 8) {
-            for (let j = 8; j < history.length; j++) {
-                history.splice(j, 1);
+        let info = { 'city': city, 'lat': lat, 'lon': lon };
+        if (history === null) {
+            history = ['ew'];
+            history[0] = info;
+        } else {
+            history.splice(0, 0, info);
+            if (history.length > 8) {
+                for (let j = 8; j < history.length; j++) {
+                    history.splice(j, 1);
+                };
             };
-        };
+        }
         localStorage.setItem('history', JSON.stringify(history));
     }
-    
+
     function buttonify() {
         $('#buttons').empty();
-        for (let b = 0; b < history.length; b++) {
-            let newBtn = $('<button>');
-            // add more classes to style buttons with bootstrap
-            newBtn.addClass('againWeather btn ');
-            newBtn.text(history[b].city);
-            newBtn.attr('id', history[b].city);
-            newBtn.attr('data-lat', history[b].lat);
-            newBtn.attr('data-lon', history[b].lon);
-            $('#buttons').append(newBtn);
-            
+        if (history != null && history.length > 0) {
+            for (let b = 0; b < history.length; b++) {
+                let newBtn = $('<button>');
+                // add more classes to style buttons with bootstrap
+                newBtn.addClass('againWeather btn ');
+                newBtn.text(history[b].city);
+                newBtn.attr('id', history[b].city);
+                newBtn.attr('data-lat', history[b].lat);
+                newBtn.attr('data-lon', history[b].lon);
+                $('#buttons').append(newBtn);
+            };
         };
     };
 
-    $('.againWeather').on('click', function(event) {
+    $('.againWeather').on('click', function (event) {
         let btnName = event.currentTarget.getAttribute('id');
         let btnLat = event.currentTarget.getAttribute('data-lat');
         let btnLon = event.currentTarget.getAttribute('data-lon');
@@ -124,8 +135,9 @@ $(document).ready(function () {
         };
         showWeather(dataObject);
     })
-    
+
     function showWeather(data) {
+        $('#display').empty();
         console.log(data.name + '\n' + data.lat + '\n' + data.lon);
         let displayURL = weatherURL + "&lat=" + data.lat + "&lon=" + data.lon + "&appid=" + appID;
         console.log(displayURL);
@@ -134,16 +146,18 @@ $(document).ready(function () {
             type: 'GET',
             url: displayURL,
             dataType: 'json'
-         }).then(function(response){
+        }).then(function (response) {
             console.log(response);
-        // $.ajax({
-        //     URL: displayURL,
-        //     method: 'GET',
-        // }).then(function(response){
-        //     console.log(response);
-        //     let currentWeather = $('<div>');
-        //     let cityName = $('<h2>');
-        //     cityName.text(data.city);
+            let currentWeather = $('<div>');
+            let cityName = $('<h2>');
+            cityName.text(data.city);
+            currentWeather.append(cityName);
+            let today = moment.unix(response.current.dt).format('dddd, D MMMM');
+            let todayDisplay = $('<h3>');
+            todayDisplay.text(today);
+            currentWeather.append(todayDisplay);
+
+            $('#display').append(currentWeather);
         });
     }
 });
