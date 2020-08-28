@@ -45,8 +45,6 @@ $(document).ready(function () {
     // array to hold searched cities
     let history = [];
 
-    let pageLoad = true;
-
     var appID = 'd818490e3db0c249345d4f13e2070e69';
     var coordinateURL = "https://api.openweathermap.org/data/2.5/weather?";
     // one-call API
@@ -55,7 +53,6 @@ $(document).ready(function () {
     initialize();
 
     $('#searchBtn').on('click', function () {
-        pageLoad = false;
         let searchString = $('#cityInput').val();
         let queryURL = coordinateURL + 'q=' + searchString + '&appid=' + appID;
         console.log(queryURL);
@@ -83,7 +80,6 @@ $(document).ready(function () {
     // initialize();
     function initialize() {
         history = JSON.parse(localStorage.getItem('history'));
-        pageLoad = true;
         buttonify();
         if (history != null && history.length > 0) {
             showWeather(history[0]);
