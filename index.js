@@ -49,8 +49,10 @@ $(document).ready(function () {
 
     var appID = 'd818490e3db0c249345d4f13e2070e69';
     var coordinateURL = "https://api.openweathermap.org/data/2.5/weather?";
-    var weatherURL = "https://api.openweathermap.org/data/2.5/onecall/timemachine?";
-    // lat={lat}&lon={lon}&dt={time}&appid={YOUR API KEY}
+    // 5-day forecast API
+    var weatherURL = "https://api.openweathermap.org/data/2.5/forecast?";
+    // one-call API
+    var weatherURL2 = 'https://api.openweathermap.org/data/2.5/onecall?exclude=minutely,hourly';
 
     initialize();
 
@@ -66,7 +68,7 @@ $(document).ready(function () {
             let cityLon = response.coord.lon;
             storeCity(searchString, cityLat, cityLon);
             buttonify();
-            let coordURL = weatherURL + "lat=" + cityLat + "&lon=" + cityLon + "&appid=" + appID;
+            let displayURL = weatherURL + "lat=" + cityLat + "&lon=" + cityLon + "&appid=" + appID;
             // $.ajax({
             //     url: coordURL,
             //     method: 'GET'
@@ -88,7 +90,7 @@ $(document).ready(function () {
 
     // add city name and coordinates to local storage
     function storeCity(city, lat, lon) {
-        let info = { 'city': city, 'lat': lat, 'lon': lon };
+        let info = {'city': city, 'lat': lat, 'lon': lon };
         history.splice(0, 0, info);
         if (history.length > 8) {
             for (let j = 8; j < history.length; j++) {
@@ -100,26 +102,43 @@ $(document).ready(function () {
     
     function buttonify() {
         $('#buttons').empty();
-        let b;
-        // this makes it so the first city 
-        if (pageLoad) {
-            b = 0;
-        } else {
-            b = 1;
-        }
-        for (b < history.length; b++) {
+        for (let b = 0; b < history.length; b++) {
             let newBtn = $('<button>');
+            // add more classes to style buttons with bootstrap
             newBtn.addClass('againWeather btn ');
             newBtn.text(history[b].city);
+            newBtn.attr('id', history[b].city);
             newBtn.attr('data-lat', history[b].lat);
             newBtn.attr('data-lon', history[b].lon);
             $('#buttons').append(newBtn);
-        }
+            
+        };
+    };
 
-    }
-
+    $('.againWeather').on('click', function(event) {
+        let btnName = event.currentTarget.getAttribute('id');
+        let btnLat = event.currentTarget.getAttribute('data-lat');
+        let btnLon = event.currentTarget.getAttribute('data-lon');
+        let dataObject = {
+            name: btnName,
+            lat: btnLat,
+            lon: btnLon
+        };
+        showWeather(dataObject);
+    })
+    
     function showWeather(data) {
-        data.
+        console.log(data.name + '\n' + data.lat + '\n' + data.lon);
+        let displayURL = weatherURL2 + "&lat=" + data.lat + "&lon=" + data.lon + "&appid=" + appID;
+        console.log(displayURL);
+        // $.ajax({
+        //     URL: displayURL,
+        //     method: 'GET' 
+        // }).then(function(response){
+        //     console.log(response);
+        //     let currentWeather = $('<div>');
+        //     let cityName = $('<h2>');
+        //     cityName.text(data.city);
+        // });
     }
-
 });

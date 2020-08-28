@@ -59,12 +59,21 @@
     <div class="container">
         <div class="row">
             <div id="searches" class="col-4">
-                <label for="cityInput"><i class="fas fa-map-marker-alt"></i></label>
-                <input type="text" id="cityInput" class="form-control" placeholder="enter a city">
-                <button type='button' id='searchBtn' class='btn btn-primary'>show</button>
-
-                <!-- add buttons here -->
-                <div id="buttons"></div>
+                <div class="container">
+                    <div class="row">
+                        <label for="cityInput"><i class="fas fa-map-marker-alt"></i></label>
+                        <input type="text" id="cityInput" class="form-control" placeholder="enter a city">
+                        <button type='button' id='searchBtn' class='btn btn-primary'>show</button>
+                    </div>
+                    <!-- add buttons here -->
+                    <div class="row">
+                        <div id="buttons"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8">
+                <!-- add weather results here -->
+                <div class="container" id="display"></div>
             </div>
         </div>
     </div>
