@@ -28,18 +28,23 @@ $(document).ready(function () {
 
     // assign  classes in quotes to call icon
     const icons = {
+        // unchanging
         tempHi: "fas fa-temperature-high",
         tempLo: "fas fa-temperature-low",
         smog: "fas fa-smog",
-        bolt: "fas fa-bolt",
-        cloud: "fas fa-cloud",
-        cloudRain: "fas fa-cloud-rain",
-        cloudShower: "fas fa-cloud-showers-heavy",
+        wind: "fas fa-wind",
+
+        // weather conditions
+        Thunderstorm: "fas fa-bolt",
+        Clouds: "fas fa-cloud",
+        Drizzle: "fas fa-cloud-rain",
+        Rain: "fas fa-cloud-showers-heavy",
+        Snow: "fas fa-snowflake",
+        Clear: "fas fa-sun",
+        
+        // unused
         cloudSun: "fas fa-cloud-sun",
         cloudSunRain: "fas fa-cloud-sun-rain",
-        snow: "fas fa-snowflake",
-        sun: "fas fa-sun",
-        wind: "fas fa-wind"
     };
 
     // array to hold searched cities
@@ -136,16 +141,33 @@ $(document).ready(function () {
             dataType: 'json'
         }).then(function (response) {
             console.log(response);
+            // div to hold today's weather info
             let currentWeather = $('<div>');
+            
+            // city name
             let cityName = $('<h2>');
             cityName.text(name);
-            currentWeather.append(cityName);
+            
+            // icon reflecting conditions
+            let conditions = response.current.weather[0].icon;
+            let iconEl = $('<img>');
+            iconEl.attr('src', 'http://openweathermap.org/img/wn/' + conditions + '@2x.png');
+
+            // today's day and date (day, month)
             let today = moment.unix(response.current.dt).format('dddd, D MMMM');
             let todayDisplay = $('<h3>');
             todayDisplay.text(today);
-            currentWeather.append(todayDisplay);
-
+            
             $('#display').append(currentWeather);
+
+            
+            // go through five days of forecast
+            const forecast = $('<div>');
+            for (let f = 0; f < 5; f++) {
+                const dayX = $('<div>');
+
+            };
+            $('#display').append(forecast);
         });
     }
 });
