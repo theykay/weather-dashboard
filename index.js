@@ -49,6 +49,7 @@ $(document).ready(function () {
 
     $('#searchBtn').on('click', function () {
         let searchString = $('#cityInput').val();
+        $('#cityInput').val('');
         let queryURL = coordinateURL + 'q=' + searchString + '&appid=' + appID;
         $.ajax({
             url: queryURL,
@@ -146,7 +147,7 @@ $(document).ready(function () {
             let conditionEl = $('<div>').attr('id', 'conditions');
             let iconEl = $('<img>');
             let descripEl = $('<h5>').text(description);
-            iconEl.attr('src', 'http://openweathermap.org/img/wn/' + conditions + '@2x.png');
+            iconEl.attr('src', 'https://openweathermap.org/img/wn/' + conditions + '@2x.png');
             if (!response.current.weather[0].icon.includes('d')) {
                 iconEl.css('background-color','midnightblue');
             }
@@ -270,7 +271,7 @@ $(document).ready(function () {
 
                 // icon for conditions
                 let icon = response.daily[f].weather[0].icon;
-                let iconEl = $('<img>').attr('src', 'http://openweathermap.org/img/wn/' + icon + '@2x.png');
+                let iconEl = $('<img>').attr('src', 'https://openweathermap.org/img/wn/' + icon + '@2x.png');
                 iconEl.attr('alt', response.daily[f].weather[0].description);
                 iconEl.addClass('forecastIcon');
                 dayEl.append(iconEl);
