@@ -98,7 +98,7 @@ $(document).ready(function () {
         for (let b = 0; b < history.length; b++) {
             let newBtn = $('<button>');
             // add more classes to style buttons with bootstrap
-            newBtn.addClass('againWeather btn ');
+            newBtn.addClass('againWeather btn btn-info');
             newBtn.text(history[b].city);
             newBtn.attr('id', history[b].city);
             newBtn.attr('data-lat', history[b].lat);
@@ -121,16 +121,14 @@ $(document).ready(function () {
     })
 
     function showWeather(name, lat, lon) {
-        $('#display').empty();
+        $('#today').empty();
         let displayURL = weatherURL + "&lat=" + lat + "&lon=" + lon + "&appid=" + appID;
-        console.log(displayURL);
-
+        
         $.ajax({
             type: 'GET',
             url: displayURL,
             dataType: 'json'
         }).then(function (response) {
-            console.log(response);
             // div to hold today's weather info
             let currentWeather = $('<div>').addClass('card');
             currentWeather.css('padding', '10px');
@@ -229,22 +227,24 @@ $(document).ready(function () {
             uviEl.append(uviIcon);
             currentWeather.append(uviEl);
 
-            $('#display').append(currentWeather);
+            $('#today').append(currentWeather);
 
             
             // go through five days of forecast
-            let forecast = $('<div>').addClass('card');
-            forecast.css('padding', '5px');
-            forecast.html('<h3>Forecast:</h3>');
+            $('#forecast').empty();
+            $('#forecast').append('<h3>Forecast:</h3>');
+            // let forecast = $('<div>').addClass('row');
+            let forecast = $('#forecast');
+            // forecast.css('padding', '5px');
             for (let f = 1; f < 6; f++) {
+                let dayEl = $('<div>').addClass('col-12 col-md-2');
+                
                 // day
                 let day = moment.unix(response.daily[f].dt).format('dddd');
                 let date = moment.unix(response.daily[f].dt).format('D MMM');
-                console.log(day + " " + date);
                 let dayH = $('<h5>').text(day);
                 let dateH = $('<h5>').text(date);
 
-                let dayEl = $('<div>');
                 dayEl.append(dayH);
                 dayEl.append(dateH);
 
@@ -252,6 +252,7 @@ $(document).ready(function () {
                 let icon = response.daily[f].weather[0].icon;
                 let iconEl = $('<img>').attr('src', 'http://openweathermap.org/img/wn/' + icon + '@2x.png');
                 iconEl.attr('alt', response.daily[f].weather[0].description);
+                iconEl.addClass('forecastIcon');
                 dayEl.append(iconEl);
 
                 // hi temp
@@ -275,7 +276,7 @@ $(document).ready(function () {
 
                 forecast.append(dayEl);
             };
-            $('#display').append(forecast);
+            $('#forecast').append(forecast);
         });
     }
 });
