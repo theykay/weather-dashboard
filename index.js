@@ -141,15 +141,20 @@ $(document).ready(function () {
             
             // today's day and date (day, month)
             let today = moment.unix(response.current.dt).format('dddd, D MMMM');
-            let todayEl = $('<h3>');
+            let todayEl = $('<h4>');
             todayEl.text(today);
             currentWeather.append(todayEl);
             
             // icon reflecting conditions
             let conditions = response.current.weather[0].icon;
+            let description = response.current.weather[0].description
+            let conditionEl = $('<div>').attr('id', 'conditions');
             let iconEl = $('<img>');
+            let descripEl = $('<h5>').text(description);
             iconEl.attr('src', 'http://openweathermap.org/img/wn/' + conditions + '@2x.png');
-            currentWeather.append(iconEl);
+            iconEl.attr('alt', description);
+            conditionEl.append(iconEl).append(descripEl);
+            currentWeather.append(conditionEl);
 
             // temperature
             let temp = response.current.temp;
