@@ -124,7 +124,7 @@ $(document).ready(function () {
             dataType: 'json'
         }).then(function (response) {
             // div to hold today's weather info
-            let currentWeather = $('<div>').addClass('card p-5');
+            let currentWeather = $('<div>').addClass('card px-5');
             // currentWeather.css('padding', '10px');
 
             // city name
@@ -159,11 +159,13 @@ $(document).ready(function () {
             temp = (temp - 273.15) * (9/5) + 32;
             temp = temp.toFixed(2);
             let tempEl = $('<h3>').html(`<i class='${icons.temp}'></i> ${temp} F`);
+            tempEl.css('text-align', 'center');
             currentWeather.append(tempEl);
             
             // humidity
             let humidity = response.current.humidity;
             let humidEl = $('<h3>').html(`<i class='${icons.drop}'></i> ${humidity}%`);
+            humidEl.css('text-align','center');
             currentWeather.append(humidEl);
             
             // wind speed
@@ -204,6 +206,7 @@ $(document).ready(function () {
                 windDir = 'ESE';
             }
             let windEl = $('<h3>').html(`<i class='${icons.wind}'></i> ${wind} mph ${windDir}`);
+            windEl.css('text-align','center');
             currentWeather.append(windEl);
 
             
@@ -226,6 +229,7 @@ $(document).ready(function () {
                 uviIcon.css('background-color', 'Purple');
             }
             uviEl.append(uviIcon);
+            uviEl.css('text-align','center');
             currentWeather.append(uviEl);
 
             $('#today').append(currentWeather);
@@ -252,7 +256,7 @@ $(document).ready(function () {
                 } else if (f === 4) {
                     dayEl.css('background-color', '#E0E0E0');
                 } else {
-                    dayEl.css('background-color', '#DCDCDC');
+                    dayEl.css('background-color', '#d8d8d8');
                 }
                 
                 // day
