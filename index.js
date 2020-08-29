@@ -14,7 +14,7 @@ $(document).ready(function () {
     // humidity
     // wind speed
     // UV index
-    // 3      show color that indicates favorable, moderate, severe
+    // 3 show color that indicates favorable, moderate, severe
     // 4 future weather conditions
     // each day on 5-day forecast shows:
     // date
@@ -22,29 +22,19 @@ $(document).ready(function () {
     // temperature (max and min)
     // humidity
     // 5 click on city in search history, show all same stuff
-    // 6 opening page shows last searched city info
+    // DONE 6 opening page shows last searched city info
 
 
 
-    // assign  classes in quotes to call icon
+    // assign classes in quotes to call icon
     const icons = {
-        // unchanging
+        temp: "fas fa-thermometer-half",
         tempHi: "fas fa-temperature-high",
         tempLo: "fas fa-temperature-low",
         smog: "fas fa-smog",
         wind: "fas fa-wind",
-
-        // weather conditions
-        Thunderstorm: "fas fa-bolt",
-        Clouds: "fas fa-cloud",
-        Drizzle: "fas fa-cloud-rain",
-        Rain: "fas fa-cloud-showers-heavy",
-        Snow: "fas fa-snowflake",
-        Clear: "fas fa-sun",
-        
-        // unused
-        cloudSun: "fas fa-cloud-sun",
-        cloudSunRain: "fas fa-cloud-sun-rain",
+        drop: "fas fa-tint",
+        sun: "fas fa-sun"
     };
 
     // array to hold searched cities
@@ -147,25 +137,56 @@ $(document).ready(function () {
             // city name
             let cityName = $('<h2>');
             cityName.text(name);
+            currentWeather.append(cityName);
+            
+            // today's day and date (day, month)
+            let today = moment.unix(response.current.dt).format('dddd, D MMMM');
+            let todayEl = $('<h3>');
+            todayEl.text(today);
+            currentWeather.append(todayEl);
             
             // icon reflecting conditions
             let conditions = response.current.weather[0].icon;
             let iconEl = $('<img>');
             iconEl.attr('src', 'http://openweathermap.org/img/wn/' + conditions + '@2x.png');
-
-            // today's day and date (day, month)
-            let today = moment.unix(response.current.dt).format('dddd, D MMMM');
-            let todayDisplay = $('<h3>');
-            todayDisplay.text(today);
+            currentWeather.append(iconEl);
 
             // temperature
-
-            // humidity
-
-            // wind speed
-
-            // uv index
+            let temp = response.current.temp;
+            temp = (temp - 273.15) * (9/5) + 32;
+            temp = temp.toFixed(2);
+            let tempEl = $('<h3>').html(`<i class='${icons.temp}'></i> ${temp} F`);
+            currentWeather.append(tempEl);
             
+            // humidity
+            let humidity = response.current.humidity;
+            let humidEl = $('<h3>').html(`<i class='${icons.drop}'></i> ${humidity}%`);
+            currentWeather.append(humidEl);
+            
+            // wind speed
+            let wind = response.current.wind_speed;
+            let windEl = $('<h3>').html(`<i class='${icons.wind}'></i> ${wind} mph`);
+            currentWeather.append(windEl);
+            
+            // uv index
+            let uvi = response.current.uvi;
+            let uviEl = $('<h3>');
+            let uviIcon = $('<span>').html(`${uvi} <i class='${icons.sun}'></i>`);
+            uviIcon.css('text-shadow', '0 0 3px grey');
+            if (uvi > 0 && uvi < 3) {
+                uviIcon.css('color', 'MediumSeaGreen');
+            } else if (uvi >= 3 && uvi < 5) {
+                uviIcon.css('color', 'Gold');
+            } else if (uvi >= 5 && uvi < 7) {
+                uviIcon.css('color', 'Orange');
+            } else if (uvi >= 7 && uvi < 10) {
+                uviIcon.css('color', 'Red');
+            } else if (uvi >= 10) {
+                uviIcon.css('color', 'Purple');
+            }
+            uviEl.append(uviIcon);
+            currentWeather.append(uviEl);
+
             $('#display').append(currentWeather);
 
             
