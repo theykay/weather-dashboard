@@ -97,7 +97,7 @@ $(document).ready(function () {
         for (let b = 0; b < history.length; b++) {
             let newBtn = $('<button>');
             // add more classes to style buttons with bootstrap
-            newBtn.addClass('againWeather btn btn-outline-info m-1 col-12');
+            newBtn.addClass('btn btn-outline-info col-12');
             newBtn.text(history[b].city);
             newBtn.attr('id', history[b].city);
             newBtn.attr('data-lat', history[b].lat);
@@ -236,7 +236,7 @@ $(document).ready(function () {
             let forecast = $('#forecast');
             // forecast.css('padding', '5px');
             for (let f = 1; f < 6; f++) {
-                let dayEl = $('<div>').addClass('col-12 col-md-2 forecast');
+                let dayEl = $('<div>').addClass('col-12 col-md forecast');
                 dayEl.css('padding', '10px');
                 if (f === 1) {
                     dayEl.css('background-color', '#F5F5F5');

@@ -17,7 +17,7 @@
 <body>
     <header>
         <!-- change header background image to reflect current weather -->
-        <h1>weather dashboard</h1>
+        <h1 style="background-color: skyblue; padding: 10px 0;">weather dashboard</h1>
     </header>
 
 
@@ -57,14 +57,20 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-4">
-                <div class="row" id='searchBar'>
-                    <label for="cityInput"></label>
-                    <input type="text" id="cityInput" class="form-control" placeholder="enter a city">
-                    <button type='button' id='searchBtn' class='btn btn-outline-success'><i class="fa fa-search-location"></i></button>
+            <div class="col-12 col-md-4 p-0 holding">
+                <div class="row mx-3 mx-md-0 mb-3" id="searchBar">
+
+
+                    <input type="text" id="cityInput" class="col form-control" placeholder="enter a city">
+
+                    <button type='button' id='searchBtn' class='col-2 btn btn-outline-success'>
+                        <i class="fa fa-search-location"></i>
+                    </button>
+
                 </div>
-                <!-- add buttons here -->
-                <div class="col-12 col-md-12 btn-toolbar" id="buttons"></div>
+                <div class="row mx-3 mx-md-0 mb-3" id='buttons'>
+                    <div class="btn-group-vertical" id="buttons"></div>
+                </div>
             </div>
 
             <div class="col-12 col-md-8">

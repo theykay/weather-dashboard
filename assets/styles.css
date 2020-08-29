@@ -2,10 +2,6 @@ h1 {
     text-align: center;
 }
 
-#searches {
-    display: flex;
-}
-
 #conditions {
     display: flex;
     flex-direction: column;
@@ -14,20 +10,31 @@ h1 {
     /* text-align: center; */
 }
 
+/* .holding {
+    padding: 10px;
+} */
+
+.btn-outline-info {
+    text-align: left;
+}
+
 .forecastIcon {
     width: 75px;
     height: auto;
 }
 
+.form-control {
+    margin-right: 0px;
+}
+
 #cityInput {
     box-sizing: border-box;
-    display: flex;
-    float: left;
+    margin: 0 0 0 0;
+    /* display: flex;
+    float: left; */
     /* flex-grow: 1; */
 }
-#searchBtn {
-    float: left;
-}
+
 
 img {
     background-color: skyblue;
@@ -39,20 +46,12 @@ img {
     /* display: flex; */
     /* flex-grow: 1; */
 }
-
+/* 
 #forecast {
     display: flex;
     justify-content: space-between;
     flex-grow: 1;
-}
-
-#buttons {
-    margin: 10px 0;
-    float: left;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-}
+} */
 
 .card {
     text-align: left;
