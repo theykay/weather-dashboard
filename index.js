@@ -132,8 +132,9 @@ $(document).ready(function () {
         }).then(function (response) {
             console.log(response);
             // div to hold today's weather info
-            let currentWeather = $('<div>');
-            
+            let currentWeather = $('<div>').addClass('card');
+            currentWeather.css('padding', '10px');
+
             // city name
             let cityName = $('<h2>');
             cityName.text(name);
@@ -170,8 +171,44 @@ $(document).ready(function () {
             
             // wind speed
             let wind = response.current.wind_speed;
-            let windEl = $('<h3>').html(`<i class='${icons.wind}'></i> ${wind} mph`);
+            let windDeg = response.current.wind_deg;
+            let windDir;
+            if ((windDeg >= 0 && windDeg < 11.25) || (windDeg >= 348.75 && windDeg <= 360)) {
+                windDir = 'E';
+            } else if (windDeg >= 11.25 && windDeg < 33.75) {
+                windDir = 'ENE';
+            } else if (windDeg >= 33.75 && windDeg < 56.25) {
+                windDir = "NE";
+            } else if (windDeg >= 56.25 && windDeg < 78.75) {
+                windDir = "NNE";
+            } else if (windDeg >= 78.75 && windDeg < 101.25) {
+                windDir = "N";
+            } else if (windDeg >= 101.25 && windDeg < 123.75) {
+                windDir = 'NNW';
+            } else if (windDeg >= 123.75 && windDeg < 146.25) {
+                windDir = 'NW';
+            } else if (windDeg >= 146.25 && windDeg < 168.75) {
+                windDir = 'WNW';
+            } else if (windDeg >= 168.75 && windDeg < 191.25) {
+                windDir = 'W';
+            } else if (windDeg >= 191.25 && windDeg < 213.75) {
+                windDir = "WSW";
+            } else if (windDeg >= 213.75 && windDeg < 236.25) {
+                windDir = "SW";
+            } else if (windDeg >= 236.25 && windDeg < 258.75) {
+                windDir = "SSW";
+            } else if (windDeg >= 258.75 && windDeg < 281.25) {
+                windDir = 'S';
+            } else if (windDeg >= 281.25 && windDeg < 303.75) {
+                windDir = 'SSE';
+            } else if (windDeg >= 303.75 && windDeg < 326.25) {
+                windDir = 'SE'
+            } else if (windDeg >= 326.25 && windDeg < 348.75) {
+                windDir = 'ESE';
+            }
+            let windEl = $('<h3>').html(`<i class='${icons.wind}'></i> ${wind} mph ${windDir}`);
             currentWeather.append(windEl);
+
             
             // uv index
             let uvi = response.current.uvi;
@@ -196,20 +233,47 @@ $(document).ready(function () {
 
             
             // go through five days of forecast
-            const forecast = $('<div>');
-            forecast.html('<h3>5-Day forecast:</h3>');
-            for (let f = 0; f < 5; f++) {
+            let forecast = $('<div>').addClass('card');
+            forecast.css('padding', '5px');
+            forecast.html('<h3>Forecast:</h3>');
+            for (let f = 1; f < 6; f++) {
                 // day
-                const dayX = $('<div>');
+                let day = moment.unix(response.daily[f].dt).format('dddd');
+                let date = moment.unix(response.daily[f].dt).format('D MMM');
+                console.log(day + " " + date);
+                let dayH = $('<h5>').text(day);
+                let dateH = $('<h5>').text(date);
+
+                let dayEl = $('<div>');
+                dayEl.append(dayH);
+                dayEl.append(dateH);
 
                 // icon for conditions
+                let icon = response.daily[f].weather[0].icon;
+                let iconEl = $('<img>').attr('src', 'http://openweathermap.org/img/wn/' + icon + '@2x.png');
+                iconEl.attr('alt', response.daily[f].weather[0].description);
+                dayEl.append(iconEl);
 
                 // hi temp
+                let tempH = response.daily[f].temp.max;
+                tempH = (tempH - 273.15) * (9/5) + 32;
+                tempH = tempH.toFixed(2);
+                let tempHEl = $('<h5>').html(`<i class ="${icons.tempHi}"></i> ${tempH} F`);
+                dayEl.append(tempHEl);
 
                 // lo temp
+                let tempL = response.daily[f].temp.min;
+                tempL = (tempL - 273.15) * (9/5) + 32;
+                tempL = tempL.toFixed(2);
+                let tempLEl = $('<h5>').html(`<i class ="${icons.tempLo}"></i> ${tempL} F`);
+                dayEl.append(tempLEl);
 
                 // humidity
+                let humid = response.daily[f].humidity;
+                let humidEl = $('<h5>').html(`<i class ="${icons.drop}"></i> ${humid}%`);
+                dayEl.append(humidEl);
 
+                forecast.append(dayEl);
             };
             $('#display').append(forecast);
         });
