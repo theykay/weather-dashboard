@@ -50,7 +50,6 @@ $(document).ready(function () {
     $('#searchBtn').on('click', function () {
         let searchString = $('#cityInput').val();
         let queryURL = coordinateURL + 'q=' + searchString + '&appid=' + appID;
-        console.log(queryURL);
         $.ajax({
             url: queryURL,
             method: "GET"
@@ -60,7 +59,7 @@ $(document).ready(function () {
             let cityLon = response.coord.lon;
             storeCity(cityName, cityLat, cityLon);
             buttonify();
-            showWeather(response);
+            showWeather(cityName, cityLat, cityLon);
         }).catch(function () {
             // if something fails; error handling
             $('#errorModal').modal('show');
@@ -98,7 +97,7 @@ $(document).ready(function () {
         for (let b = 0; b < history.length; b++) {
             let newBtn = $('<button>');
             // add more classes to style buttons with bootstrap
-            newBtn.addClass('againWeather btn btn-info');
+            newBtn.addClass('againWeather btn btn-info m-1 col-3');
             newBtn.text(history[b].city);
             newBtn.attr('id', history[b].city);
             newBtn.attr('data-lat', history[b].lat);
@@ -112,12 +111,7 @@ $(document).ready(function () {
         let btnName = event.currentTarget.getAttribute('id');
         let btnLat = event.currentTarget.getAttribute('data-lat');
         let btnLon = event.currentTarget.getAttribute('data-lon');
-        let dataObject = {
-            name: btnName,
-            lat: btnLat,
-            lon: btnLon
-        };
-        showWeather(dataObject.name, dataObject.lat, dataObject.lon);
+        showWeather(btnName, btnLat, btnLon);
     })
 
     function showWeather(name, lat, lon) {

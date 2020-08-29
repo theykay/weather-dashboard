@@ -58,13 +58,15 @@
     <div class="container">
         <div class="row">
             <div class="col-12 col-md-4">
-                <label for="cityInput"></label>
-                <input type="text" id="cityInput" class="form-control" placeholder="enter a city">
-                <button type='button' id='searchBtn' class='btn btn-success'><i class="fa fa-search-location"></i></button>
-
+                <div class="row" id='searchBar'>
+                    <label for="cityInput"></label>
+                    <input type="text" id="cityInput" class="form-control" placeholder="enter a city">
+                    <button type='button' id='searchBtn' class='btn btn-success'><i class="fa fa-search-location"></i></button>
+                </div>
                 <!-- add buttons here -->
-                <div id="buttons"></div>
+                <div class="col-12 col-md-12 btn-toolbar" id="buttons"></div>
             </div>
+
             <div class="col-12 col-md-8">
                 <!-- add weather results here -->
                 <div class="container" id="today"></div>
@@ -74,29 +76,6 @@
         </div>
     </div>
 
-    <!-- <div class="container">
-        <div class="row">
-            <div id="searches" class="col-12 col-md-4">
-
-
-                <label for="cityInput"><i class="fas fa-map-marker-alt"></i></label>
-                <input type="text" id="cityInput" class="form-control" placeholder="enter a city">
-                <button type='button' id='searchBtn' class='btn btn-success'>show</button>
-
-                 add buttons here 
-                <div id="buttons"></div>
-
-            </div>
-            <div class="col-12 col-md-8">
-                add weather results here
-                <div class="container" id="display"></div>
-            </div>
-        </div>
-    </div> -->
-
-
-    <!-- Materialize JavaScript -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"

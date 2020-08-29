@@ -14,12 +14,6 @@ h1 {
     /* text-align: center; */
 }
 
-#searchBar {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
 .forecastIcon {
     width: 75px;
     height: auto;
@@ -27,7 +21,28 @@ h1 {
 
 #cityInput {
     box-sizing: border-box;
-    margin: 0 0 0 0.5rem;
     display: flex;
-    flex-grow: 1;
+    float: left;
+    /* flex-grow: 1; */
 }
+#searchBtn {
+    float: left;
+}
+
+#buttons {
+    margin: 10px 0;
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.col-4#buttons {
+    flex-direction: column;
+}
+/*
+.againWeather {
+    box-sizing: border-box;
+    width: 15%;
+    margin: 1%;
+} */
