@@ -97,7 +97,7 @@ $(document).ready(function () {
         for (let b = 0; b < history.length; b++) {
             let newBtn = $('<button>');
             // add more classes to style buttons with bootstrap
-            newBtn.addClass('btn btn-outline-info col-12');
+            newBtn.addClass('btn btn-outline-info col-12 againWeather');
             newBtn.text(history[b].city);
             newBtn.attr('id', history[b].city);
             newBtn.attr('data-lat', history[b].lat);
@@ -124,18 +124,20 @@ $(document).ready(function () {
             dataType: 'json'
         }).then(function (response) {
             // div to hold today's weather info
-            let currentWeather = $('<div>').addClass('card');
-            currentWeather.css('padding', '10px');
+            let currentWeather = $('<div>').addClass('card p-5');
+            // currentWeather.css('padding', '10px');
 
             // city name
             let cityName = $('<h2>');
             cityName.text(name);
+            cityName.css('text-align','center');
             currentWeather.append(cityName);
             
             // today's day and date (day, month)
             let today = moment.unix(response.current.dt).format('dddd, D MMMM');
             let todayEl = $('<h4>');
             todayEl.text(today);
+            todayEl.css('text-align','center');
             currentWeather.append(todayEl);
             
             // icon reflecting conditions
@@ -145,6 +147,9 @@ $(document).ready(function () {
             let iconEl = $('<img>');
             let descripEl = $('<h5>').text(description);
             iconEl.attr('src', 'http://openweathermap.org/img/wn/' + conditions + '@2x.png');
+            if (!response.current.weather[0].icon.includes('d')) {
+                iconEl.css('background-color','midnightblue');
+            }
             iconEl.attr('alt', description);
             conditionEl.append(iconEl).append(descripEl);
             currentWeather.append(conditionEl);
@@ -228,7 +233,7 @@ $(document).ready(function () {
             
             // go through five days of forecast
             $('#forecast').empty();
-            let forecastTitle = $('<h3>').text('Forecast').addClass('col-12');
+            let forecastTitle = $('<h3>').text('5-Day Forecast').addClass('col-12');
             forecastTitle.css('text-align', 'center');
             forecastTitle.css('margin-top', '10px');
             $('#forecast').append(forecastTitle);
