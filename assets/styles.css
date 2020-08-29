@@ -29,6 +29,23 @@ h1 {
     float: left;
 }
 
+img {
+    background-color: skyblue;
+    margin: 5px;
+}
+
+.forecast {
+    text-align: center;
+    /* display: flex; */
+    /* flex-grow: 1; */
+}
+
+#forecast {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
 #buttons {
     margin: 10px 0;
     float: left;
@@ -37,9 +54,10 @@ h1 {
     justify-content: flex-start;
 }
 
-.col-4#buttons {
-    flex-direction: column;
+.card {
+    text-align: left;
 }
+
 /*
 .againWeather {
     box-sizing: border-box;

@@ -97,7 +97,7 @@ $(document).ready(function () {
         for (let b = 0; b < history.length; b++) {
             let newBtn = $('<button>');
             // add more classes to style buttons with bootstrap
-            newBtn.addClass('againWeather btn btn-info m-1 col-3');
+            newBtn.addClass('againWeather btn btn-outline-info m-1 col-12');
             newBtn.text(history[b].city);
             newBtn.attr('id', history[b].city);
             newBtn.attr('data-lat', history[b].lat);
@@ -204,19 +204,21 @@ $(document).ready(function () {
             
             // uv index
             let uvi = response.current.uvi;
-            let uviEl = $('<h3>');
-            let uviIcon = $('<span>').html(`${uvi} <i class='${icons.sun}'></i>`);
-            uviIcon.css('text-shadow', '0 0 3px grey');
+            let uviEl = $('<h3>').html(`<i class='${icons.sun}'></i> `);
+            let uviIcon = $('<span>').html(` ${uvi} `);
+            uviIcon.css('color', 'white');
+            uviIcon.css('text-shadow', '0 0 3px black');
+            uviIcon.css('padding', '3px 10px');
             if (uvi > 0 && uvi < 3) {
-                uviIcon.css('color', 'MediumSeaGreen');
+                uviIcon.css('background-color', 'MediumSeaGreen');
             } else if (uvi >= 3 && uvi < 5) {
-                uviIcon.css('color', 'Gold');
+                uviIcon.css('background-color', 'Gold');
             } else if (uvi >= 5 && uvi < 7) {
-                uviIcon.css('color', 'Orange');
+                uviIcon.css('background-color', 'Orange');
             } else if (uvi >= 7 && uvi < 10) {
-                uviIcon.css('color', 'Red');
+                uviIcon.css('background-color', 'Red');
             } else if (uvi >= 10) {
-                uviIcon.css('color', 'Purple');
+                uviIcon.css('background-color', 'Purple');
             }
             uviEl.append(uviIcon);
             currentWeather.append(uviEl);
@@ -226,18 +228,33 @@ $(document).ready(function () {
             
             // go through five days of forecast
             $('#forecast').empty();
-            $('#forecast').append('<h3>Forecast:</h3>');
+            let forecastTitle = $('<h3>').text('Forecast').addClass('col-12');
+            forecastTitle.css('text-align', 'center');
+            forecastTitle.css('margin-top', '10px');
+            $('#forecast').append(forecastTitle);
             // let forecast = $('<div>').addClass('row');
             let forecast = $('#forecast');
             // forecast.css('padding', '5px');
             for (let f = 1; f < 6; f++) {
-                let dayEl = $('<div>').addClass('col-12 col-md-2');
+                let dayEl = $('<div>').addClass('col-12 col-md-2 forecast');
+                dayEl.css('padding', '10px');
+                if (f === 1) {
+                    dayEl.css('background-color', '#F5F5F5');
+                } else if (f === 2) {
+                    dayEl.css('background-color', '#F0F0F0');
+                } else if (f === 3) {
+                    dayEl.css('background-color', '#E8E8E8');
+                } else if (f === 4) {
+                    dayEl.css('background-color', '#E0E0E0');
+                } else {
+                    dayEl.css('background-color', '#DCDCDC');
+                }
                 
                 // day
                 let day = moment.unix(response.daily[f].dt).format('dddd');
                 let date = moment.unix(response.daily[f].dt).format('D MMM');
-                let dayH = $('<h5>').text(day);
-                let dateH = $('<h5>').text(date);
+                let dayH = $('<h5>').addClass('col-12').text(day);
+                let dateH = $('<h5>').addClass('col-12').text(date);
 
                 dayEl.append(dayH);
                 dayEl.append(dateH);
