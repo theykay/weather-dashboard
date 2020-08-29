@@ -5,14 +5,8 @@ h1 {
 #conditions {
     display: flex;
     flex-direction: column;
-    /* justify-content: flex-start; */
     align-items: center;
-    /* text-align: center; */
 }
-
-/* .holding {
-    padding: 10px;
-} */
 
 .btn-outline-info {
     text-align: left;
@@ -30,36 +24,30 @@ h1 {
 #cityInput {
     box-sizing: border-box;
     margin: 0 0 0 0;
-    /* display: flex;
-    float: left; */
-    /* flex-grow: 1; */
 }
 
 
 img {
-    background-color: skyblue;
+    background-color: #5bc0de;
     margin: 5px;
+}
+
+.btn-outline-info {
+    color: #5bc0de;
+    outline-color: #5bc0de;
+    border-color: #5bc0de;
+}
+
+.btn-outline-info:hover {
+    background-color: #5bc0de;
+    color: white;
+    border-color: #5bc0de;
 }
 
 .forecast {
     text-align: center;
-    /* display: flex; */
-    /* flex-grow: 1; */
 }
-/* 
-#forecast {
-    display: flex;
-    justify-content: space-between;
-    flex-grow: 1;
-} */
 
 .card {
     text-align: left;
 }
-
-/*
-.againWeather {
-    box-sizing: border-box;
-    width: 15%;
-    margin: 1%;
-} */
